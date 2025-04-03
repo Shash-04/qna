@@ -7,13 +7,13 @@ import { Query } from "node-appwrite";
 import React from "react";
 
 interface PageProps {
-  params: Promise<{ userId: string; userSlug: string }>;
-  searchParams: { page?: string };
+  params: { userId: string; userSlug: string }; // ✅ No Promise<> wrapper
+  searchParams: { page?: string }; // ✅ No Promise<> wrapper
 }
 
 export default async function Page({ params, searchParams }: PageProps) {
-  // Await the promise to get the actual params object.
-  const { userId, userSlug } = await params;
+  // ✅ No need to await params or searchParams
+  const { userId } = params;
   const { page = "1" } = searchParams;
 
   const queries = [
