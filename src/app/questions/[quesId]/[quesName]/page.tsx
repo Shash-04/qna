@@ -27,8 +27,17 @@ import DeleteQuestion from "./DeleteQuestion";
 import EditQuestion from "./EditQuestion";
 import { TracingBeam } from "@/components/ui/tracing-beam";
 
-const Page = async ({ params }: { params: { quesId: string; quesName: string } }) => {
-    const { quesId, quesName } =  await params; // ✅ Ensure `params` is awaited
+
+interface PageProps {
+    params: Promise<{
+      quesId: string;
+      quesName: string;
+    }>;
+  }  
+
+  export default async function Page({ params }: PageProps) {
+    // Await the params since they are a Promise
+    const { quesId, quesName } = await params;
 
     const [question, answers, upvotes, downvotes, comments] = await Promise.all([
         databases.getDocument(db, questionCollection, quesId),
@@ -204,7 +213,7 @@ const Page = async ({ params }: { params: { quesId: string; quesName: string } }
     );
 };
 
-export default Page;
+
 
 export async function generateStaticParams() {
     return []; // This ensures Next.js treats it as a dynamic route without preloading params
