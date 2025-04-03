@@ -1,4 +1,3 @@
-
 import Pagination from "@/components/Pagination";
 import QuestionCard from "@/components/QuestionCard";
 import { answerCollection, db, questionCollection, voteCollection } from "@/models/name";
@@ -14,9 +13,9 @@ const Page = async ({
     params: { userId: string; userSlug: string };
     searchParams: { page?: string };
 }) => {
-    // Await params and searchParams before using them
-    const { userId } = await params;
-    const { page = "1" } = await searchParams;
+    // Access params and searchParams directly (no await needed)
+    const { userId } =  await params;
+    const { page = "1" } =  await searchParams;
 
     const queries = [
         Query.equal("authorId", userId),
