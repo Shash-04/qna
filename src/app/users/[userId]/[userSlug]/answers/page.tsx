@@ -7,13 +7,12 @@ import Link from "next/link";
 import { Query } from "node-appwrite";
 import React from "react";
 
-const Page = async ({
-    params,
-    searchParams,
-}: {
-    params: { userId: string; userSlug: string };
-    searchParams: { page?: string };
-}) => {
+interface PageProps {
+  params: Promise<{ userId: string; userSlug: string }>;
+  searchParams: Promise<{ page?: string }>;
+}
+
+const Page = async ({ params, searchParams }: PageProps) => {
     // Await params and searchParams
     const { userId } = await params;
     const { page = "1" } = await searchParams;
@@ -21,7 +20,7 @@ const Page = async ({
     const queries = [
         Query.equal("authorId", userId),
         Query.orderDesc("$createdAt"),
-        Query.offset((+page - 1) * 25),
+        Query.offset((parseInt(page) - 1) * 25),
         Query.limit(25),
     ];
 
