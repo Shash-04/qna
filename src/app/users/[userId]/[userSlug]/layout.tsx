@@ -8,16 +8,14 @@ import Navbar from "./Navbar";
 import { IconClockFilled, IconUserFilled } from "@tabler/icons-react";
 import Header from "@/app/components/Header";
 
-export default async function Layout({ 
-    children, 
-    params 
-  }: { 
-    children: React.ReactNode;
-    params: { userId: string; userSlug: string };
-  }) {
-    // Create a new variable
-    const { userId } = await params;
+interface LayoutProps {
+  children: React.ReactNode;
+  params: Promise<{ userId: string; userSlug: string }>;
+}
 
+export default async function Layout({ children, params }: LayoutProps) {
+    // Await the params promise
+    const { userId } = await params;
     
     const user = await users.get<UserPrefs>(userId);
 
