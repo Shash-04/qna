@@ -13,9 +13,9 @@ const Page = async ({
     params: { userId: string; userSlug: string };
     searchParams: { page?: string };
 }) => {
-    // Access params and searchParams directly (no await needed)
-    const { userId } =  await params;
-    const { page = "1" } =  await searchParams;
+    // ✅ Fix: No need to await params or searchParams
+    const { userId } = params;
+    const { page = "1" } = searchParams;
 
     const queries = [
         Query.equal("authorId", userId),
