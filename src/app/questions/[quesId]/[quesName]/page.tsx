@@ -65,9 +65,14 @@ interface PageProps {
     ]);
 
     // ✅ Ensure `question.attachmentId` exists before fetching preview
-    const preview = question.attachmentId
-        ? await storage.getFilePreview(questionAttachmentBucket, question.attachmentId)
-        : null;
+ let preview = null;
+    if (question.attachmentId) {
+        try {
+            preview = await storage.getFileView(questionAttachmentBucket, question.attachmentId);
+        } catch (error) {
+            console.error("Error fetching file view:", error);
+        }
+    }
 
     const author = await users.get<UserPrefs>(question.authorId);
 
