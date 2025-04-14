@@ -2,10 +2,19 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["aceternity.com","cloud.appwrite.io"], // Add the domain here
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "aceternity.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cloud.appwrite.io",
+        pathname: "/v1/storage/**", // for Appwrite file previews/views
+      },
+    ],
   },
   eslint: {
-    // Disable ESLint during production builds
     ignoreDuringBuilds: true,
   },
 };
